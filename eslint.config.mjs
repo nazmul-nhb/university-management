@@ -32,7 +32,7 @@ export default [
     },
     rules: {
       ...tsEslintPlugin.configs.recommended.rules,
-      ...prettierConfig.rules, 
+      ...prettierConfig.rules,
       'prettier/prettier': 'off',
       'no-unused-vars': 'error',
       'no-unused-expressions': 'error',
@@ -46,7 +46,7 @@ export default [
     },
   },
   {
-    files: ["src/server.ts"],
+    files: ["src/server.ts", "src/configs/db.ts"],
     rules: {
       "no-console": "off",
     },
