@@ -8,8 +8,8 @@
 		"dev": "nodemon",
 		"start": "node dist/server.js",
 		"format": "prettier --write src/",
-		"lint": "eslint .",
-		"fix": "eslint . --fix"
+		"lint": "eslint src",
+		"fix": "eslint src --fix"
 	},
 	"keywords": [
 		"typescript",

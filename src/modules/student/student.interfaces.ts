@@ -41,7 +41,7 @@ export interface Student {
 
 export interface StudentDocument extends Document {}
 
-export interface CreateStudents {
+export interface StudentResponse {
 	success: boolean;
 	message: string;
 	data?: StudentDocument;

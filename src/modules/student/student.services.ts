@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongoose';
 import type { Student, StudentDocument } from './student.interfaces';
 import { StudentModel } from './student.model';
 
@@ -14,15 +15,28 @@ const createStudentIntoDB = async (
 };
 
 /**
- * 
+ *
  * @returns Returns all student data from the DB
  */
 const getAllStudentsFromDB = async (): Promise<StudentDocument[]> => {
 	const result = await StudentModel.find({});
-    return result;
+	return result;
+};
+
+/**
+ *
+ * @param id Accepts MongoDB ObjectId
+ * @returns Returns matched student data from MongoDB or nothing
+ */
+const getSingleStudentFromDB = async (
+	id: ObjectId,
+): Promise<StudentDocument | null> => {
+	const result = await StudentModel.findById(id);
+	return result;
 };
 
 export const studentServices = {
 	createStudentIntoDB,
 	getAllStudentsFromDB,
+	getSingleStudentFromDB,
 };
