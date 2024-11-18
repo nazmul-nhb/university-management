@@ -1,3 +1,5 @@
+import { Document } from 'mongoose';
+
 export interface UserName {
 	firstName: string;
 	middleName?: string;
@@ -35,4 +37,12 @@ export interface Student {
 	localGuardian: LocalGuardian;
 	profileImg?: string;
 	status: 'active' | 'blocked';
+}
+
+export interface StudentDocument extends Document {}
+
+export interface CreationResponse {
+	success: boolean;
+	message: string;
+	data?: StudentDocument;
 }
