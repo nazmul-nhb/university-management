@@ -41,8 +41,14 @@ export interface Student {
 
 export interface StudentDocument extends Document {}
 
-export interface CreationResponse {
+export interface CreateStudents {
 	success: boolean;
 	message: string;
 	data?: StudentDocument;
+}
+
+export interface GetAllStudents {
+	success: boolean;
+	message: string;
+	data?: StudentDocument[];
 }
