@@ -1,0 +1,41 @@
+{
+	"name": "university-management",
+	"version": "1.0.0",
+	"description": "University Management Server with Persian Bhai",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"typescript",
+		"mongoose",
+		"express"
+	],
+	"author": {
+		"name": "Nazmul Hassan",
+		"email": "nazmulnhb@gmail.com"
+	},
+	"license": "ISC",
+	"dependencies": {
+		"cors": "^2.8.5",
+		"dotenv": "^16.4.5",
+		"express": "^4.21.1",
+		"mongooses": "^1.0.0"
+	},
+	"devDependencies": {
+		"@types/cors": "^2.8.17",
+		"@types/dotenv": "^8.2.3",
+		"@types/express": "^5.0.0",
+		"@types/mongoose": "^5.11.97",
+		"@types/node": "^22.9.0",
+		"@typescript-eslint/eslint-plugin": "^8.15.0",
+		"@typescript-eslint/parser": "^8.15.0",
+		"eslint": "^9.15.0",
+		"eslint-config-prettier": "^9.1.0",
+		"nodemon": "^3.1.7",
+		"prettier": "^3.3.3",
+		"rimraf": "^6.0.1",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.6.3"
+	}
+}
