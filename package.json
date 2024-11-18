@@ -2,9 +2,10 @@
 	"name": "university-management",
 	"version": "1.0.0",
 	"description": "University Management Server with Persian Bhai",
-	"main": "index.js",
+	"main": "src/server.ts",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"dev": "nodemon",
+		"start": "node dist/server.js"
 	},
 	"keywords": [
 		"typescript",
@@ -20,13 +21,11 @@
 		"cors": "^2.8.5",
 		"dotenv": "^16.4.5",
 		"express": "^4.21.1",
-		"mongooses": "^1.0.0"
+		"mongoose": "^8.8.1"
 	},
 	"devDependencies": {
 		"@types/cors": "^2.8.17",
-		"@types/dotenv": "^8.2.3",
 		"@types/express": "^5.0.0",
-		"@types/mongoose": "^5.11.97",
 		"@types/node": "^22.9.0",
 		"@typescript-eslint/eslint-plugin": "^8.15.0",
 		"@typescript-eslint/parser": "^8.15.0",
