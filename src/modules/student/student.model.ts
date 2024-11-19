@@ -1,6 +1,7 @@
-import { Schema, model } from 'mongoose';
 import bcrypt from 'bcrypt';
-
+import configs from '../../configs';
+import { Schema, model } from 'mongoose';
+// import uniqueValidator from 'mongoose-unique-validator';
 import type {
 	IGuardian,
 	ILocalGuardian,
@@ -10,8 +11,6 @@ import type {
 	// TStudentModel,
 	IUserName,
 } from './student.interfaces';
-import mongooseUniqueValidator from 'mongoose-unique-validator';
-import configs from '../../configs';
 
 const userNameSchema = new Schema<IUserName>(
 	{
@@ -137,6 +136,10 @@ const studentSchema = new Schema<IStudent, IStudentModel>({
 		enum: ['active', 'blocked'],
 		default: 'active',
 	},
+	isDeletedStudent: {
+		type: Boolean,
+		default: false,
+	},
 });
 
 // Custom instance method
@@ -182,13 +185,19 @@ studentSchema.pre('save', async function (next) {
 
 // Post Save Middleware/Hook
 studentSchema.post('save', function (student, next) {
-	student.password = "";
+	student.password = '';
 	next();
 });
 
-studentSchema.plugin(mongooseUniqueValidator, {
-	message: "'{VALUE}' is already taken!",
+// Query Middleware
+studentSchema.pre('find', function (next) {
+	this.find({ isDeletedStudent: { $ne: true } });
+	next();
 });
+
+// studentSchema.plugin(uniqueValidator, {
+// 	message: "'{VALUE}' is already taken!",
+// });
 
 export const Student = model<IStudent, IStudentModel>('Student', studentSchema);
 // TStudentModel

@@ -38,6 +38,7 @@ export interface IStudent {
 	localGuardian: ILocalGuardian;
 	profileImg?: string;
 	status: 'active' | 'blocked';
+	isDeletedStudent: boolean;
 }
 
 export type TStudentDocument = IStudent & Document;

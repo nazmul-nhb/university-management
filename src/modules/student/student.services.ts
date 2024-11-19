@@ -1,4 +1,4 @@
-import { ObjectId } from 'mongoose';
+import { ObjectId, UpdateWriteOpResult } from 'mongoose';
 import type { IStudent, TStudentDocument } from './student.interfaces';
 import { Student } from './student.model';
 
@@ -56,8 +56,21 @@ const getSingleStudentFromDB = async (
 	return result;
 };
 
+/**
+ *
+ * @param id Accepts MongoDB ObjectId
+ * @returns Returns matched student data from MongoDB or nothing
+ */
+const deleteStudentFromDB = async (
+	id: string,
+): Promise<UpdateWriteOpResult> => {
+	const result = await Student.updateOne({ id }, { isDeletedStudent: true });
+	return result;
+};
+
 export const studentServices = {
 	createStudentIntoDB,
 	getAllStudentsFromDB,
 	getSingleStudentFromDB,
+	deleteStudentFromDB,
 };

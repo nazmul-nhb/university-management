@@ -13,7 +13,7 @@ import studentValidationSchema from './student.validation';
  * Create a new student
  */
 const createStudent = async (
-	req: Request<Record<string, never>, Record<string, never>, IStudent>,
+	req: Request<{}, {}, IStudent>,
 	res: Response<StudentResponse>,
 	next: NextFunction,
 ): Promise<Response<StudentResponse> | void> => {
@@ -86,8 +86,30 @@ const getSingleStudent = async (
 	}
 };
 
+const deleteStudent = async (
+	req: Request<{ id: string }>,
+	res: Response,
+	next: NextFunction,
+) => {
+	try {
+		const { id } = req.params;
+
+		const result = await studentServices.deleteStudentFromDB(id);
+
+		res.status(200).json({
+			success: true,
+			message: 'Student is Deleted Successfully!',
+			data: result,
+		});
+	} catch (error) {
+		console.error(error);
+		next(error);
+	}
+};
+
 export const studentControllers = {
 	createStudent,
 	getAllStudents,
 	getSingleStudent,
+	deleteStudent,
 };
