@@ -58,8 +58,8 @@ const getSingleStudentFromDB = async (
 
 /**
  *
- * @param id Accepts MongoDB ObjectId
- * @returns Returns matched student data from MongoDB or nothing
+ * @param id Accepts custom string ID
+ * @returns Modify matched student data in MongoDB
  */
 const deleteStudentFromDB = async (
 	id: string,
