@@ -3,7 +3,7 @@
 	"ext": "ts",
 	"ignore": ["dist"],
 	"exec": "ts-node --transpileOnly src/server.ts",
-	"delay": "200",
+	"delay": "500",
 	"env": {
 		"NODE_ENV": "development"
 	}

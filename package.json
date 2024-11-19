@@ -5,8 +5,8 @@
 	"main": "src/server.ts",
 	"scripts": {
 		"build": "rimraf dist && tsc",
-		"dev": "nodemon",
-		"start": "node dist/server.js",
+		"start:dev": "nodemon",
+		"start:prod": "node dist/server.js",
 		"format": "prettier --write src/",
 		"lint": "eslint src",
 		"fix": "eslint src --fix"

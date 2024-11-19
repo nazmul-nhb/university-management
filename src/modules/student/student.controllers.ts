@@ -1,6 +1,10 @@
 import type { Request, Response, NextFunction } from 'express';
 import { studentServices } from './student.services';
-import { StudentResponse, GetAllStudents, Student } from './student.interfaces';
+import type {
+	StudentResponse,
+	GetAllStudents,
+	Student,
+} from './student.interfaces';
 import { ObjectId } from 'mongoose';
 
 /**
@@ -18,21 +22,13 @@ const createStudent = async (
 		const result = await studentServices.createStudentIntoDB(student);
 
 		if (result) {
-			return res.status(201).send({
+			return res.status(201).json({
 				success: true,
 				message: `Successfully Created New Student!`,
 				data: result,
 			});
 		}
 	} catch (error) {
-		if (error instanceof Error) {
-			console.error(error.message);
-
-			return res.status(400).send({
-				success: false,
-				message: error.message,
-			});
-		}
 		next(error);
 	}
 };
@@ -49,20 +45,12 @@ const getAllStudents = async (
 	try {
 		const students = await studentServices.getAllStudentsFromDB();
 
-		return res.status(200).send({
+		return res.status(200).json({
 			success: true,
 			message: `Successfully Retrieved Student Data!`,
 			data: students,
 		});
 	} catch (error) {
-		if (error instanceof Error) {
-			console.error(error.message);
-
-			return res.status(400).send({
-				success: false,
-				message: error.message,
-			});
-		}
 		next(error);
 	}
 };
@@ -82,7 +70,7 @@ const getSingleStudent = async (
 		const student = await studentServices.getSingleStudentFromDB(id);
 
 		if (student) {
-			return res.status(200).send({
+			return res.status(200).json({
 				success: true,
 				message: `Successfully Retrieved Student Data!`,
 				data: student,
@@ -91,14 +79,6 @@ const getSingleStudent = async (
 			throw new Error('No Student Found with Provided ID!');
 		}
 	} catch (error) {
-		if (error instanceof Error) {
-			console.error(error.message);
-
-			return res.status(400).send({
-				success: false,
-				message: error.message,
-			});
-		}
 		next(error);
 	}
 };
