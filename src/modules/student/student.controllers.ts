@@ -6,6 +6,7 @@ import type {
 	Student,
 } from './student.interfaces';
 import { ObjectId } from 'mongoose';
+import studentValidationSchema from './student.validation';
 
 /**
  *
@@ -19,7 +20,9 @@ const createStudent = async (
 	try {
 		const student = req.body;
 
-		const result = await studentServices.createStudentIntoDB(student);
+		const parsedStudent = studentValidationSchema.parse(student);
+
+		const result = await studentServices.createStudentIntoDB(parsedStudent);
 
 		if (result) {
 			return res.status(201).json({

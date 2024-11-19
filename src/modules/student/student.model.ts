@@ -6,11 +6,14 @@ import type {
 	Student,
 	UserName,
 } from './student.interfaces';
+import mongooseUniqueValidator from 'mongoose-unique-validator';
 
 const userNameSchema = new Schema<UserName>({
 	firstName: {
 		type: String,
 		required: [true, 'First Name is Required!'],
+		trim: true,
+		maxlength: [20, 'First name cannot be more than 20 characters'],
 	},
 	middleName: {
 		type: String,
@@ -18,6 +21,7 @@ const userNameSchema = new Schema<UserName>({
 	lastName: {
 		type: String,
 		required: [true, 'Last Name is Required!'],
+		maxlength: [20, 'Last name cannot be more than 20 characters'],
 	},
 });
 
@@ -68,7 +72,7 @@ const localGuardianSchema = new Schema<LocalGuardian>({
 });
 
 const studentSchema = new Schema<Student>({
-	id: { type: String, required: true, unique: true },
+	id: { type: String, required: [true, 'ID is required'], unique: true },
 	name: { type: userNameSchema, required: [true, 'Name is required!'] },
 	gender: {
 		type: String,
@@ -76,26 +80,46 @@ const studentSchema = new Schema<Student>({
 			values: ['male', 'female', 'other'],
 			message: '{VALUE} is not a valid gender!',
 		},
-		required: true,
+		required: [true, 'Gender is Required!'],
 	},
 	dateOfBirth: { type: String },
-	email: { type: String, required: true, unique: true },
-	contactNo: { type: String, required: true },
+	email: {
+		type: String,
+		required: [true, 'Email is Required!'],
+		unique: true,
+	},
+	contactNo: { type: String, required: [true, 'Contact No. is Required!'] },
 	emergencyContactNo: { type: String, required: true },
 	bloodGroup: {
 		type: String,
 		enum: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
 	},
-	presentAddress: { type: String, required: true },
-	permanentAddress: { type: String, required: true },
-	guardian: { type: guardianSchema, required: true },
-	localGuardian: { type: localGuardianSchema, required: true },
+	presentAddress: {
+		type: String,
+		required: [true, 'Present Address is Required!'],
+	},
+	permanentAddress: {
+		type: String,
+		required: [true, 'Permanent Address is Required!'],
+	},
+	guardian: {
+		type: guardianSchema,
+		required: [true, 'Guardian is Required!'],
+	},
+	localGuardian: {
+		type: localGuardianSchema,
+		required: [true, 'Local Guardian is Required!'],
+	},
 	profileImg: { type: String },
 	status: {
 		type: String,
 		enum: ['active', 'blocked'],
 		default: 'active',
 	},
+});
+
+studentSchema.plugin(mongooseUniqueValidator, {
+	message: "{PATH} must be unique. '{VALUE}' is already taken!",
 });
 
 export const StudentModel = model<Student>('Student', studentSchema);
