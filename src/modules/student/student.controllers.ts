@@ -3,7 +3,7 @@ import { studentServices } from './student.services';
 import type {
 	StudentResponse,
 	GetAllStudents,
-	Student,
+	IStudent,
 } from './student.interfaces';
 import { ObjectId } from 'mongoose';
 import studentValidationSchema from './student.validation';
@@ -13,7 +13,7 @@ import studentValidationSchema from './student.validation';
  * Create a new student
  */
 const createStudent = async (
-	req: Request<{}, {}, Student>,
+	req: Request<{}, {}, IStudent>,
 	res: Response<StudentResponse>,
 	next: NextFunction,
 ): Promise<Response<StudentResponse> | void> => {

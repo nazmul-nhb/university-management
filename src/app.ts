@@ -3,6 +3,7 @@ import express from 'express';
 import type { Application, NextFunction, Request, Response } from 'express';
 import { ErrorWithStatus } from './types/interfaces';
 import { StudentRoutes } from './modules/student/student.routes';
+import { ZodError } from 'zod';
 
 const app: Application = express();
 
@@ -36,16 +37,25 @@ app.use(
 		res: Response,
 		next: NextFunction,
 	) => {
-		console.error('🛑 Error: ' + error.message);
+		let errorMessage = error.message || 'Internal Server Error!';
 
-		// Delegate to the default Express error handler, when the headers have already been sent to the client
+		// Handle Zod validation errors
+		if (error instanceof ZodError) {
+			errorMessage = error.errors
+				.map((err) => `${err.path.join('.')}: ${err.message}`)
+				.join('; ');
+		}
+
+		console.error('🛑 Error: ' + errorMessage);
+
+		// Delegate to the default Express error handler if the headers have already been sent to the client
 		if (res.headersSent) {
 			return next(error);
 		}
 
 		res.status(error.status || 500).json({
 			success: false,
-			message: error.message || 'Internal Server Error!',
+			message: errorMessage,
 		});
 	},
 );

@@ -1,14 +1,16 @@
 import { Schema, model } from 'mongoose';
 
 import type {
-	Guardian,
-	LocalGuardian,
-	Student,
-	UserName,
+	IGuardian,
+	ILocalGuardian,
+	IStudent,
+	IStudentMethods,
+	TStudentModel,
+	IUserName,
 } from './student.interfaces';
 import mongooseUniqueValidator from 'mongoose-unique-validator';
 
-const userNameSchema = new Schema<UserName>({
+const userNameSchema = new Schema<IUserName>({
 	firstName: {
 		type: String,
 		required: [true, 'First Name is Required!'],
@@ -25,7 +27,7 @@ const userNameSchema = new Schema<UserName>({
 	},
 });
 
-const guardianSchema = new Schema<Guardian>({
+const guardianSchema = new Schema<IGuardian>({
 	fatherName: {
 		type: String,
 		required: [true, "Father's Name is required!"],
@@ -52,7 +54,7 @@ const guardianSchema = new Schema<Guardian>({
 	},
 });
 
-const localGuardianSchema = new Schema<LocalGuardian>({
+const localGuardianSchema = new Schema<ILocalGuardian>({
 	name: {
 		type: String,
 		required: [true, 'Name is Required!'],
@@ -71,7 +73,7 @@ const localGuardianSchema = new Schema<LocalGuardian>({
 	},
 });
 
-const studentSchema = new Schema<Student>({
+const studentSchema = new Schema<IStudent, TStudentModel, IStudentMethods>({
 	id: { type: String, required: [true, 'ID is required'], unique: true },
 	name: { type: userNameSchema, required: [true, 'Name is required!'] },
 	gender: {
@@ -118,8 +120,21 @@ const studentSchema = new Schema<Student>({
 	},
 });
 
+// Custom instance method
+studentSchema.methods.doesStudentExist = async function () {
+	const existingUser = await Student.findOne({ contactNo: this.contactNo });
+	
+	return existingUser;
+};
+
+// studentSchema.method('doesStudentExist', async function () {
+// 	const existingUser = await Student.findOne({ contactNo: this.contactNo });
+
+// 	return existingUser;
+// });
+
 studentSchema.plugin(mongooseUniqueValidator, {
-	message: "{PATH} must be unique. '{VALUE}' is already taken!",
+	message: "'{VALUE}' is already taken!",
 });
 
-export const StudentModel = model<Student>('Student', studentSchema);
+export const Student = model<IStudent, TStudentModel>('Student', studentSchema);

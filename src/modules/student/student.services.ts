@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongoose';
-import type { Student, StudentDocument } from './student.interfaces';
-import { StudentModel } from './student.model';
+import type { IStudent, TStudentDocument } from './student.interfaces';
+import { Student } from './student.model';
 
 /**
  *
@@ -8,9 +8,23 @@ import { StudentModel } from './student.model';
  * @returns Returns saved student from MongoDB
  */
 const createStudentIntoDB = async (
-	student: Student,
-): Promise<StudentDocument> => {
-	const result = await StudentModel.create(student);
+	studentData: IStudent,
+): Promise<TStudentDocument> => {
+	// built-in static method
+	// const result = await StudentModel.create(studentData);
+
+	// create an instance
+	const student = new Student(studentData);
+
+	const studentExists = await student.doesStudentExist()
+
+	if (studentExists) {
+		throw new Error('Student with this contact number already exists!');
+	}
+
+	// built-in instance method
+	const result = await student.save();
+
 	return result;
 };
 
@@ -18,8 +32,8 @@ const createStudentIntoDB = async (
  *
  * @returns Returns all student data from the DB
  */
-const getAllStudentsFromDB = async (): Promise<StudentDocument[]> => {
-	const result = await StudentModel.find({});
+const getAllStudentsFromDB = async (): Promise<TStudentDocument[]> => {
+	const result = await Student.find({});
 	return result;
 };
 
@@ -30,8 +44,8 @@ const getAllStudentsFromDB = async (): Promise<StudentDocument[]> => {
  */
 const getSingleStudentFromDB = async (
 	id: ObjectId,
-): Promise<StudentDocument | null> => {
-	const result = await StudentModel.findById(id);
+): Promise<TStudentDocument | null> => {
+	const result = await Student.findById(id);
 	return result;
 };
 
