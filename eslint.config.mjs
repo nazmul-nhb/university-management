@@ -34,7 +34,8 @@ export default [
       ...tsEslintPlugin.configs.recommended.rules,
       ...prettierConfig.rules,
       'prettier/prettier': 'off',
-      'no-unused-vars': 'error',
+      // 'no-unused-vars': 'error',
+      'no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
       'no-unused-expressions': 'error',
       'prefer-const': 'error',
       "no-console": ["warn", { "allow": ["warn", "error"] }],
@@ -42,7 +43,8 @@ export default [
       // semi: ["warn", "always"],
       // '@typescript-eslint/no-unused-vars': 'error',
       // '@typescript-eslint/no-unused-expressions': 'error',
-      "@typescript-eslint/no-empty-object-type": "off",
+      // "@typescript-eslint/no-empty-object-type": "off",
+      // "@typescript-eslint/no-unused-vars": ["error", { 'argsIgnorePattern': '^_' }]
     },
   },
   {

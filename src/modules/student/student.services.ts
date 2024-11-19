@@ -10,20 +10,27 @@ import { Student } from './student.model';
 const createStudentIntoDB = async (
 	studentData: IStudent,
 ): Promise<TStudentDocument> => {
-	// built-in static method
-	// const result = await StudentModel.create(studentData);
-
-	// create an instance
-	const student = new Student(studentData);
-
-	const studentExists = await student.doesStudentExist()
+	// Use custom static method
+	const studentExists = await Student.doesStudentExist(studentData.contactNo);
 
 	if (studentExists) {
 		throw new Error('Student with this contact number already exists!');
 	}
 
+	// built-in static method
+	const result = await Student.create(studentData);
+
+	// create an instance
+	// const student = new Student(studentData);
+
+	// const studentExists = await student.doesStudentExist()
+
+	// if (studentExists) {
+	// 	throw new Error('Student with this contact number already exists!');
+	// }
+
 	// built-in instance method
-	const result = await student.save();
+	// const result = await student.save();
 
 	return result;
 };

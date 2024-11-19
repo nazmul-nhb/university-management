@@ -4,8 +4,9 @@ import type {
 	IGuardian,
 	ILocalGuardian,
 	IStudent,
-	IStudentMethods,
-	TStudentModel,
+	IStudentModel,
+	// IStudentMethods,
+	// TStudentModel,
 	IUserName,
 } from './student.interfaces';
 import mongooseUniqueValidator from 'mongoose-unique-validator';
@@ -73,7 +74,9 @@ const localGuardianSchema = new Schema<ILocalGuardian>({
 	},
 });
 
-const studentSchema = new Schema<IStudent, TStudentModel, IStudentMethods>({
+const studentSchema = new Schema<IStudent, IStudentModel>({
+	// TStudentModel,
+	// IStudentMethods
 	id: { type: String, required: [true, 'ID is required'], unique: true },
 	name: { type: userNameSchema, required: [true, 'Name is required!'] },
 	gender: {
@@ -121,20 +124,39 @@ const studentSchema = new Schema<IStudent, TStudentModel, IStudentMethods>({
 });
 
 // Custom instance method
-studentSchema.methods.doesStudentExist = async function () {
-	const existingUser = await Student.findOne({ contactNo: this.contactNo });
-	
-	return existingUser;
-};
+// studentSchema.methods.doesStudentExist = async function () {
+// 	const existingUser = await Student.findOne({ contactNo: this.contactNo });
 
+// 	return existingUser;
+// };
+
+// Or
 // studentSchema.method('doesStudentExist', async function () {
 // 	const existingUser = await Student.findOne({ contactNo: this.contactNo });
 
 // 	return existingUser;
 // });
 
+// Custom static method
+studentSchema.statics.doesStudentExist = async function (contactNo: string) {
+	const existingUser = await Student.findOne({ contactNo });
+
+	return existingUser;
+};
+
+// Or
+// studentSchema.static(
+// 	'doesStudentExist',
+// 	async function doesStudentExist(contactNo: string) {
+// 		const existingUser = await Student.findOne({ contactNo });
+
+// 		return existingUser;
+// 	},
+// );
+
 studentSchema.plugin(mongooseUniqueValidator, {
 	message: "'{VALUE}' is already taken!",
 });
 
-export const Student = model<IStudent, TStudentModel>('Student', studentSchema);
+export const Student = model<IStudent, IStudentModel>('Student', studentSchema);
+// TStudentModel

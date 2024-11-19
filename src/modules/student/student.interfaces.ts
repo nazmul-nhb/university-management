@@ -41,15 +41,22 @@ export interface IStudent {
 
 export type TStudentDocument = IStudent & Document;
 
-export interface IStudentMethods {
-	doesStudentExist(): Promise<TStudentDocument | null>;
-}
+// Types for instance method
+// export interface IStudentMethods {
+// 	doesStudentExist(): Promise<TStudentDocument | null>;
+// }
 
-export type TStudentModel = Model<
-	IStudent,
-	Record<string, never>,
-	IStudentMethods
->;
+// export type TStudentModel = Model<
+// 	IStudent,
+// 	Record<string, never>,
+// 	IStudentMethods
+// >;
+
+// Type for static method
+export interface IStudentModel extends Model<IStudent> {
+	// eslint-disable-next-line no-unused-vars
+	doesStudentExist(contactNo: string): Promise<TStudentDocument | null>;
+}
 
 export interface StudentResponse {
 	success: boolean;

@@ -13,7 +13,7 @@ import studentValidationSchema from './student.validation';
  * Create a new student
  */
 const createStudent = async (
-	req: Request<{}, {}, IStudent>,
+	req: Request<Record<string, never>, Record<string, never>, IStudent>,
 	res: Response<StudentResponse>,
 	next: NextFunction,
 ): Promise<Response<StudentResponse> | void> => {
