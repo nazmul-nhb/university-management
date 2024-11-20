@@ -3,7 +3,7 @@ import express from 'express';
 import type { Application, NextFunction, Request, Response } from 'express';
 import { ErrorWithStatus } from './types/interfaces';
 import { StudentRoutes } from './modules/student/student.routes';
-import { ZodError } from 'zod';
+import utilities from './utilities';
 
 const app: Application = express();
 
@@ -30,36 +30,20 @@ app.use((req: Request, _res: Response, next: NextFunction) => {
 });
 
 // Global Error Handler
-app.use(
-	(
-		error: ErrorWithStatus,
-		_req: Request,
-		res: Response,
-		next: NextFunction,
-	) => {
-		let errorMessage = error.message || 'Internal Server Error!';
+app.use((error: unknown, _req: Request, res: Response, next: NextFunction) => {
+	const errorMessage = utilities.processErrorMsgs(error);
 
-		console.warn(error);
+	console.error('🛑 Error: ' + errorMessage);
 
-		// Handle Zod validation errors
-		if (error instanceof ZodError) {
-			errorMessage = error.errors
-				.map((err) => `${err.path.join('.')}: ${err.message}`)
-				.join('; ');
-		}
+	// Delegate to the default Express error handler if the headers have already been sent to the client
+	if (res.headersSent) {
+		return next(error);
+	}
 
-		console.error('🛑 Error: ' + errorMessage);
-
-		// Delegate to the default Express error handler if the headers have already been sent to the client
-		if (res.headersSent) {
-			return next(error);
-		}
-
-		res.status(error.status || 500).json({
-			success: false,
-			message: errorMessage,
-		});
-	},
-);
+	res.status((error as ErrorWithStatus).status || 500).json({
+		success: false,
+		message: errorMessage,
+	});
+});
 
 export default app;
