@@ -1,4 +1,4 @@
-import { ObjectId, UpdateWriteOpResult } from 'mongoose';
+import type { ObjectId, UpdateWriteOpResult } from 'mongoose';
 import type { IStudent, TStudentDocument } from './student.interfaces';
 import { Student } from './student.model';
 

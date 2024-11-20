@@ -5,7 +5,7 @@ import type {
 	GetAllStudents,
 	IStudent,
 } from './student.interfaces';
-import { ObjectId } from 'mongoose';
+import type { ObjectId } from 'mongoose';
 import studentValidationSchema from './student.validation';
 
 /**

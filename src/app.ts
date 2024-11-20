@@ -1,7 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 import type { Application, NextFunction, Request, Response } from 'express';
-import { ErrorWithStatus } from './types/interfaces';
+import type { ErrorWithStatus } from './types/interfaces';
 import { StudentRoutes } from './modules/student/student.routes';
 import utilities from './utilities';
 
@@ -40,7 +40,7 @@ app.use((error: unknown, _req: Request, res: Response, next: NextFunction) => {
 		return next(error);
 	}
 
-	res.status((error as ErrorWithStatus).status || 500).json({
+	res.status((error as ErrorWithStatus)?.status || 500).json({
 		success: false,
 		message: errorMessage,
 	});

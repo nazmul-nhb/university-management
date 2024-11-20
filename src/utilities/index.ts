@@ -1,5 +1,9 @@
 import { ZodError } from 'zod';
-import type { ErrorWithStatus, MongoError } from '../types/interfaces';
+import type {
+	ErrorWithStatus,
+	MongoError,
+	ParserError,
+} from '../types/interfaces';
 
 /**
  *
@@ -12,7 +16,7 @@ const processErrorMsgs = (error: unknown): string => {
 		return error.errors
 			.map((err) => {
 				if (err.code === 'invalid_type') {
-					return `Expected ${err.expected} for ${err.path} but got ${err.received}!`;
+					return `Expected ${err.expected} for “${err.path}” but got ${err.received}!`;
 				}
 				return `${err.path.join('.')}: ${err.message}`;
 			})
@@ -24,7 +28,12 @@ const processErrorMsgs = (error: unknown): string => {
 		const mongoError = error as MongoError;
 		const path = Object.keys(mongoError.keyValue)[0];
 
-		return `Duplicate ${path} Found for ${mongoError.keyValue[path]}!`;
+		return `Duplicate “${path}” Found for “${mongoError.keyValue[path]}”!`;
+	} else if (
+		'type' in (error as ParserError) &&
+		(error as ParserError).type === 'entity.parse.failed'
+	) {
+		return 'Please, Send Data in Valid JSON Format!';
 	} else {
 		const generalError = error as ErrorWithStatus;
 		return generalError.message;

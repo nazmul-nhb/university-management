@@ -15,3 +15,11 @@ export interface MongoError {
 	keyPattern: Record<string, number>;
 	keyValue: Record<string, string>;
 }
+
+export interface ParserError {
+	expose: boolean;
+	statusCode: number;
+	status: number;
+	body: string;
+	type: string;
+}
