@@ -1,11 +1,10 @@
 import app from './app';
 import configs from './configs';
-import { connectDB } from './configs/db';
 
 const bootStrap = async () => {
 	try {
 		// Connect to DB
-		await connectDB();
+		await configs.connectDB();
 
 		// Listen to the Server
 		app.listen(configs.port, () => {

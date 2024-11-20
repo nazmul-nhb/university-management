@@ -1,12 +1,12 @@
 {
 	"name": "university-management",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "University Management Server with Persian Bhai",
 	"main": "src/server.ts",
 	"scripts": {
 		"build": "rimraf dist && tsc",
-		"start:dev": "nodemon",
-		"start:prod": "node dist/server.js",
+		"dev": "nodemon",
+		"start": "node dist/server.js",
 		"format": "prettier --write src/",
 		"lint": "eslint src",
 		"fix": "eslint src --fix"
@@ -14,7 +14,8 @@
 	"keywords": [
 		"typescript",
 		"mongoose",
-		"express"
+		"express",
+		"bcrypt"
 	],
 	"author": {
 		"name": "Nazmul Hassan",

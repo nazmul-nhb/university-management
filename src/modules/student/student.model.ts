@@ -159,7 +159,7 @@ studentSchema.virtual('fullName').get(function () {
 		this.name.middleName,
 		this.name.lastName,
 	];
-	
+
 	return nameParts.filter(Boolean).join(' ');
 });
 

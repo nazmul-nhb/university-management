@@ -86,6 +86,9 @@ const getSingleStudent = async (
 	}
 };
 
+/**
+ * Delete a student by student ID
+ */
 const deleteStudent = async (
 	req: Request<{ id: string }>,
 	res: Response,

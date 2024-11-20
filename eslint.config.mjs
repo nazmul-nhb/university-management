@@ -48,7 +48,7 @@ export default [
     },
   },
   {
-    files: ["src/server.ts", "src/configs/db.ts"],
+    files: ["src/server.ts", "src/configs/**/*.ts"],
     rules: {
       "no-console": "off",
     },

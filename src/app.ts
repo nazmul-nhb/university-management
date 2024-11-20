@@ -39,6 +39,8 @@ app.use(
 	) => {
 		let errorMessage = error.message || 'Internal Server Error!';
 
+		console.warn(error);
+
 		// Handle Zod validation errors
 		if (error instanceof ZodError) {
 			errorMessage = error.errors
