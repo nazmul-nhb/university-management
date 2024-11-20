@@ -11,7 +11,7 @@ import type {
  * @returns Returns error message as string
  */
 const processErrorMsgs = (error: unknown): string => {
-	// Handle Zod validation errors
+	// Process Zod Validation Error(s)
 	if (error instanceof ZodError) {
 		return error.errors
 			.map((err) => {
@@ -22,6 +22,7 @@ const processErrorMsgs = (error: unknown): string => {
 			})
 			.join('; ');
 	} else if (
+		// Process MongoDB Duplicate Error
 		'code' in (error as MongoError) &&
 		(error as MongoError).code === 11000
 	) {
@@ -30,11 +31,13 @@ const processErrorMsgs = (error: unknown): string => {
 
 		return `Duplicate “${path}” Found for “${mongoError.keyValue[path]}”!`;
 	} else if (
+		// Process Express Body Parser Error
 		'type' in (error as ParserError) &&
 		(error as ParserError).type === 'entity.parse.failed'
 	) {
 		return 'Please, Send Data in Valid JSON Format!';
 	} else {
+		// Process General Error
 		const generalError = error as ErrorWithStatus;
 		return generalError.message;
 	}
