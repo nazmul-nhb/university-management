@@ -6,7 +6,9 @@ dotenv.config({ path: path.join(process.cwd(), '.env') });
 
 const mongoUri = process.env.MONGO_URI as string;
 
-// Connect to MongoDB using Mongoose
+/**
+ * Connect to MongoDB using Mongoose
+ */
 export const connectDB = async (): Promise<void> => {
 	try {
 		// Throw error if there is no connection string

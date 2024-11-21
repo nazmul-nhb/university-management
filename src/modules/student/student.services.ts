@@ -57,9 +57,11 @@ const getSingleStudentFromDB = async (
 };
 
 /**
+ * Marks a student as deleted in the database by setting the `isDeletedStudent` flag to `true`.
  *
- * @param id Accepts custom student ID
- * @returns Modify matched student data in MongoDB by setting isDeletedStudent true
+ * @param id Accepts custom student ID to identify a student.
+ * @returns Returns a promise resolving to the result of the update operation,
+ * which includes information about the modification (e.g., number of documents matched and modified).
  */
 const deleteStudentFromDB = async (
 	id: string,

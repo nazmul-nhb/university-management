@@ -60,7 +60,7 @@ const getAllStudents = async (
 
 /**
  *
- * Get a single student's data for given id
+ * Get a single student's data for given mongodb objectId
  */
 const getSingleStudent = async (
 	req: Request<{ id: ObjectId }>,
@@ -87,7 +87,7 @@ const getSingleStudent = async (
 };
 
 /**
- * Delete a student by student ID
+ * Mark a student as deleted by custom student ID
  */
 const deleteStudent = async (
 	req: Request<{ id: string }>,
@@ -105,7 +105,6 @@ const deleteStudent = async (
 			data: result,
 		});
 	} catch (error) {
-		console.error(error);
 		next(error);
 	}
 };
