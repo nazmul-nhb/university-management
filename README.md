@@ -1,1 +1,1 @@
-# University Management Server
+# Student Management Server
